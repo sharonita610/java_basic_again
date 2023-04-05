@@ -2,7 +2,10 @@ package day05.member;
 
 // 역할 : 회원 관리 앱의 입출력을 담당
 
+import java.util.Locale;
 import java.util.Scanner;
+
+import static day05.member.Gender.*;
 
 public class MemberView {
 
@@ -53,13 +56,14 @@ public class MemberView {
 
                     break;
                 case "3":
-
                     mr.showMembers();
                     stop();
                     break;
                 case "4":
+                    changePasswordViewProcess();
                     break;
                 case "5":
+                    removeMemberViewProcess();
                     break;
                 case "6":
                     String answer = input("# 정말로 종료합니까? [y/n]");
@@ -77,6 +81,56 @@ public class MemberView {
             }
         }
 
+    }
+
+    private void removeMemberViewProcess() {
+        // 삭제대상 메일 입력 받기
+        String removeEmail = input("# 삭제할 대상의 이메일 : ");
+
+        Member foundMember = mr.findByEmail(removeEmail);
+
+        if (foundMember != null) {
+            String inputAnswer = input(String.format("# %s님의 정보를 삭제 하시겠습니까? : [y/n]", foundMember.memberName));
+            switch (inputAnswer.toLowerCase().charAt(0)) {
+                case 'Y':
+                    mr.removeMember(removeEmail);
+                    System.out.println("\n# 회원 정보 삭제 성공!");
+                default:
+                    System.out.println("\n# 삭제를 취소합니다!");
+            }
+        } else {
+            System.out.println("\n# 조회 결과가 없습니다.");
+        }
+
+
+        // 존재하는지 확인 후 삭제 처리 위임
+        // -> 한 번 더 y/n으로 삭제 여부 묻기
+    }
+
+    //비밀번호 벼경 입출력 처리
+    private void changePasswordViewProcess() {
+
+        String email = input("# 수정할 대상의 이메일 : ");
+
+        // 대상 탐색
+        Member foundMember = mr.findByEmail(email);
+
+        if (foundMember != null) {
+            // 수정 진행
+            System.out.printf("%s님의 비밀번호를 변경합니다!\n", foundMember.memberName);
+
+            // 기존 비밀번호와 같으면 변경 취소
+            String newPassword = input("# 새로운 비밀번호 : ");
+
+            if (foundMember.password.equals(newPassword)) {
+                System.out.println("# 기존비밀번호와 같습니다!");
+                return;
+            }
+            mr.changePassword(email, newPassword);
+            System.out.println("\n# 비밀번호가 성공적으로 수정되었습니다.");
+        } else {
+            System.out.println("\n# 조회 결과가 없습니다.");
+        }
     }
 
     String input(String message) { // print 그리고 밑에서 잡고 ctrl alt m 하면 함수로 만들어줌
@@ -114,10 +168,10 @@ public class MemberView {
 
             switch (inputGender.toUpperCase().charAt(0)) {
                 case 'M':
-                    gender = Gender.MALE;
+                    gender = MALE;
                     break;
                 case 'F':
-                    gender = Gender.FEMALE;
+                    gender = FEMALE;
                     break checkGender;
                 default:
                     System.out.println("# 성별을 M/F로 정확히 입력하세요");
@@ -147,7 +201,7 @@ public class MemberView {
             System.out.println("\n========= 조회 결과 =========");
             System.out.printf("# 이름: %s\n", foundMember.memberName);
             System.out.printf("# 비밀번호: %s\n", foundMember.password);
-            System.out.printf("# 성별: %s\n", (foundMember.gender == Gender.MALE) ? "남성" : "여성");
+            System.out.printf("# 성별: %s\n", (foundMember.gender == MALE) ? "남성" : "여성");
             System.out.printf("# 나이: %d세\n", foundMember.age);
         } else {
             System.out.println("\n# 조회된 회원이 없습니다.");
