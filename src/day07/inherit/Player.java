@@ -14,11 +14,12 @@ public class Player extends Object{ // 수퍼클래스에 상속을 안주면 Ob
 
     public Player(String nickName) {
         super(); // 숨어있다
-        System.out.println("Player의 생성자 호출!");
+//        System.out.println("Player의 생성자 호출!");
         this.nickName = nickName;
         this.level = 1;
         this.hp = 50;
     }
+
 
     public void showStatus() {
         System.out.println("\n===== Character's info =====");
