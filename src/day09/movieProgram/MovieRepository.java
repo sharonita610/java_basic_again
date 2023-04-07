@@ -22,7 +22,7 @@ public class MovieRepository {
 
     // ========================= 1 =============================
     // 배열에 영화 목록을 넣을 수 있도록 array list를 대신하는 StringList 를 만들어준다
-    private StringList movies;
+    private StringList movies = new StringList();
 
 
     // 새로운 배우와 영화를 등록
@@ -66,11 +66,11 @@ public class MovieRepository {
 
 
         // 2. 그 배우의 객체에서 영화를 빼온다
-        actor.getMovies();
+        StringList stringList = actor.getMovies();
 
         // 3. 그 영화목록에 새 영화를 추가한다
-        if (!movies.includes(movie)) {
-            movies.push(movie);
+        if (!stringList.includes(movie)) {
+            stringList.push(movie);
             return true;
 
         }

@@ -76,10 +76,10 @@ public class MovieView {
         if(mr.actorExists(name)){
             System.out.printf("\n# %s님의 작품 목록: \n",name);
             makeLine();
-            String[] movieList = mr.movieList(name);
+            String[] movieList = mr.getMovies(name);
 
             for (int i = 0; i < movieList.length; i++) {
-                System.out.printf("* %d. %s\n",i+1, movieList);
+                System.out.printf("* %d. %s\n",i+1, movieList[i]);
             }
         }else{
             System.out.println("해당 배우는 등록되지 않았습니다.");
