@@ -1,5 +1,7 @@
 package day05.member;
 
+import java.time.LocalDate;
+
 // 역할 : 한 명의 회원 정보를 묶어주는 역할
 // Java Bean
 public class Member {
@@ -11,6 +13,8 @@ public class Member {
     Gender gender; // 열거형 타입, 고정값일때 CAP LETTER 로 쓰게 됨 . ENUM
     int age;
 
+
+    LocalDate regDate;
     //생성자
 
     public Member(String email, String password, String memberName, int memberId, Gender gender, int age) {
