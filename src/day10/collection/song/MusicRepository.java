@@ -2,6 +2,7 @@ package day10.collection.song;
 
 import day04.array.StringList;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class MusicRepository {
         Artist artist = new Artist(artistName, new HashSet<>());
         artist.getSongList().add(songName);
         artistList.put(artist.getName(), artist);
+        autoSave();
 
     }
 
@@ -51,6 +53,7 @@ public class MusicRepository {
     public boolean inputSong(String artistName, String songName) {
         Artist artist = findArtistbyName(artistName);
         boolean flag = artist.getSongList().add(songName);
+        if (flag) autoSave();
         return flag;
     }
 
@@ -62,6 +65,48 @@ public class MusicRepository {
     // 등록된 가수의 수 반환
     public int count() {
         return artistList.size();
+    }
+
+    // 자동 세이브 기능
+    public void autoSave(){
+
+        File f = new File("C:/music");
+        if(!f.exists()) f.mkdir();
+
+
+        try(ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream("C:/music/m.sav")
+        )){
+
+            oos.writeObject(artistList);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 자동로드
+    public static void loadFile(){
+
+        // 세이브 파일이 존재 한다면
+        File f = new File("C:/music/m.sav");
+        if(f.exists()){
+            // 로드해라
+            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+
+                artistList = (Map<String, Artist>) ois.readObject();
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
 }

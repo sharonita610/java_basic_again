@@ -9,7 +9,7 @@ public class FileInputExample {
 
         String path = "C:\\Programming_academy\\java_basic\\src\\day02\\Test.java";
 
-        try (FileInputStream fis = new FileInputStream(path);) {
+        try (FileInputStream fis = new FileInputStream(path)) {
 
             int data = 0;
 
@@ -17,7 +17,7 @@ public class FileInputExample {
                 data = fis.read();
                 System.out.write(data); // 아스키를 문자로 출력
             }
-            
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

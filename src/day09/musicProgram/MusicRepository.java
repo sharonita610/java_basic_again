@@ -2,6 +2,9 @@ package day09.musicProgram;
 
 import day04.array.StringList;
 
+import java.io.*;
+import java.util.Map;
+
 public class MusicRepository {
 
     private static Artist[] artistList; // 가수 배열
@@ -43,6 +46,8 @@ public class MusicRepository {
         }
         temp[temp.length - 1] = artist;
         artistList = temp;
+        // 6. 세이브 파일에 저장
+        autoSave();
 
         // 위에 모든 코드를 이렇게 압축 할 수 있다
 //        Artist artist1 = new Artist(artistName, new StringList(songName));
@@ -75,7 +80,9 @@ public class MusicRepository {
             songList.push(songName);
             return true;
         }
+        autoSave();
         return false;
+
     }
 
     // 특정 가수의 노래목록을 반환하는 기능
@@ -88,5 +95,32 @@ public class MusicRepository {
     public int count() {
         return artistList.length;
     }
+
+
+    // 자동 세이브 기능
+    public void autoSave(){
+
+        File f = new File("C:/music");
+        if(!f.exists()) f.mkdir();
+
+
+        try(ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream("C:/music/m.sav")
+        )){
+
+            oos.writeObject(artistList);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    // 자동 로드 기능
+
+
 
 }
