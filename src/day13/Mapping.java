@@ -112,6 +112,6 @@ public class Mapping {
         System.out.printf("avgCal = %.1f kcal \n", avgCal);
 
 
-        
+
     }
 }
