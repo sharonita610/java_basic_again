@@ -6,12 +6,12 @@ import java.time.LocalDate;
 // Java Bean
 public class Member {
     // 필드
-    String email;
-    String password;
-    String memberName;
-    int memberId;
-    Gender gender; // 열거형 타입, 고정값일때 CAP LETTER 로 쓰게 됨 . ENUM
-    int age;
+    public String email;
+    public String password;
+    public String memberName;
+    public int memberId;
+    public Gender gender; // 열거형 타입, 고정값일때 CAP LETTER 로 쓰게 됨 . ENUM
+    public int age;
 
 
     LocalDate regDate;
